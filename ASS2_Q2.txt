@@ -1,0 +1,801 @@
+Q-2:-Create a PHP application for “Shopping Cart”.
+
+ 	Admin:- 
+		Login 
+		Category Master 
+		Subcategory Master 
+		Product Master 
+		Date range wise shopping report 
+ 
+	Customer:-  
+
+		Login
+ 		Registration 
+ 		Home Page : Product Search according to category and sub category. 
+	        View Cart   
+
+
+Admin:-
+-------------------------------------Category.php---------------------------------------------------
+
+<?php
+    require("../user/connection.php");
+    require("../admin/navbar.php");
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><i><center>Category Master</center></i></h1><br>
+    <form method="POST" action="">
+        <div class="container">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Category Name</label>
+                <input type="text" class="form-control" name="catname" placeholder="Enter Category Name">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Category Description</label>
+                <input type="text" class="form-control" name="catdes" placeholder="Enter Category Description">
+              </div><br>
+              <div align="center">
+                <input type="submit" class="btn btn-primary" value="Add Category" name="submit" style="width: max-content;">
+              </div>
+        </div>
+    </form>
+</body>
+</html>
+
+<?php
+    if(isset($_POST['submit']))
+    {
+        $catname = $_POST['catname'];
+        $catdes = $_POST['catdes'];
+
+        $query = "insert into category values('','$catname','$catdes')";
+        mysqli_query($con,$query);
+        header("location");
+    }
+
+
+?>
+
+
+-----------------------------------------Navbar.php-----------------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+  <div class="b-example-divider"></div>
+
+<header class="p-3 text-bg-dark">
+  <div class="container">
+    <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+      <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+        <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+      </a>
+
+      <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+        <!-- <li><a href="../admin/admin1.php  " class="nav-link px-2 text-white">View</a></li> -->
+        <li><a href="../admin/category.php" class="nav-link px-2 text-white">Category</a></li>
+        <li><a href="../admin/subcategory.php" class="nav-link px-2 text-white">SubCategory</a></li>
+        <li><a href="../admin/product.php" class="nav-link px-2 text-white">Product</a></li>
+        <!-- <li><a href="#" class="nav-link px-2 text-white">About</a></li> -->
+      </ul>
+
+      <!-- <form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+        <input type="search" class="form-control form-control-dark text-bg-dark" placeholder="Search..." aria-label="Search">
+      </form> -->
+
+      <div class="text-end">
+      <a class="btn btn-outline-danger me-2" href="../user/logout.php">Logout</a>        <!-- <button type="button" class="btn btn-warning">Sign-up</button> -->
+      </div>
+    </div>
+  </div>
+</header>
+
+</body>
+</html>
+
+
+
+------------------------------------------Product.php----------------------------------------------
+
+
+<?php
+    require("../user/connection.php");
+    require("../admin/navbar.php");
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><i><center>Product Master</center></i></h1><br>
+    <form method="POST" enctype="multipart/form-data">
+        <div class="container">
+        <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Category Name</label>
+              </div>
+              <div class="col-6">
+                    <select name="sel" class="form-select">
+                        <?php
+                            $query = "select * from category";
+                            $res = mysqli_query($con,$query);
+                            while($row=mysqli_fetch_assoc($res))
+                            {
+                                ?>
+                                        <option value="<?php echo $row['subcid'] ?>"><?php echo $row ['catname'] ?></option>
+                                <?php
+                            }
+
+                        ?>
+                    </select>
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Product Name</label>
+                <input type="text" class="form-control" name="proname" placeholder="Enter Product Name">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Product Price</label>
+                <input type="text" class="form-control" name="proprice" placeholder="Enter Product Price">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Product Description</label>
+                <input type="text" class="form-control" name="prodes" placeholder="Enter Product Description">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Product Stock</label>
+                <input type="text" class="form-control" name="prostock" placeholder="Enter Product Stock">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Product Photo</label>
+                <input type="file" class="form-control" name="photo" >
+              </div><br>
+              <div align="center">
+                <input type="submit" class="btn btn-primary" value="Add" name="add" style="width: max-content;">
+              </div>
+        </div>
+    </form>
+</body>
+</html>
+
+<?php
+    if(isset($_POST['add']))
+    {
+        $subcid = $_POST['sel'];
+        $proname = $_POST['proname'];
+        $proprice = $_POST['proprice'];
+        $prodes = $_POST['prodes'];
+        $prostock = $_POST['prostock'];
+
+        $filename = $_FILES['photo']['name'];
+        $basename = substr($filename,0,strripos($filename,'.'));
+        $ext = substr($filename,strripos($filename,'.'));
+        $tmp = $_FILES['photo']['tmp_name'];
+    
+        $allowed_array = array(".jpg",".png",".jpeg");
+        $uploadok=0;
+    
+        if(in_array($ext,$allowed_array))
+        {
+            $newfilename = md5($basename).rand(1,700).$ext;
+            if(file_exists("./photo/".$newfilename))
+            {
+                echo "<script> alert('File Already Exists')</script>";
+    
+            }
+            else
+            {
+                move_uploaded_file($tmp,"./photo/".$newfilename);
+                $uploadok = 1;
+            }
+        }
+        elseif(empty($basename))
+        {
+            echo "<script> alert('Please select file to upload')</script>";
+        }
+        elseif($size > 2000000)
+        {
+            echo "<script> alert('File is too large to upload')</script>";
+        }
+        else
+        {
+            echo "<script> alert('File extension should be".implode(',',$allowed_array)."')</script>";
+        }
+        if($uploadok==1)
+        {
+            echo "<script> alert('File Uploaded Successfully')</script>";
+        }
+
+        $query = "insert into product values('','$subcid','$proname','$proprice','$prodes',' $prostock','$newfilename')";
+        mysqli_query($con,$query) or die(mysqli_error($con));
+    }
+
+
+?>
+
+
+
+----------------------------------------Subcategory.php-------------------------------------------
+
+<?php
+        require("../user/connection.php");
+        include("../admin/navbar.php");
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><i><center>Sub Category Master</center></i></h1><br>
+    <form>
+        <div class="container">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Category Name</label>
+              </div>
+              <div class="col-6">
+                    <select name="cid" class="form-select">
+                        <?php
+                            $query = "select * from category";
+                            $res = mysqli_query($con,$query);
+                            while($row=mysqli_fetch_assoc($res))
+                            {
+                                ?>
+                                        <option value="<?php echo $row['cid'] ?>"><?php echo $row ['catname'] ?></option>
+                                <?php
+                            }
+
+                        ?>
+                    </select>
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Sub Category Name</label>
+                <input type="text" class="form-control" name="subcname" placeholder="Enter Sub Category Name">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Sub Category Description</label>
+                <input type="text" class="form-control"  name="subcdesc" placeholder="Enter Sub Category Description">
+              </div><br>
+              <div align="center">
+                <input type="submit" class="btn btn-primary" value="Add Sub Category" name="submit" style="width: max-content;">
+              </div>
+        </div>
+    </form>
+</body>
+</html>
+
+
+<?php
+    if(isset($_POST['submit']))
+    {
+        $cid = $_POST['cid'];
+        $subcname = $_POST['subcname'];
+        $subcdesc = $_POST['subcdesc'];
+
+        $query = "insert into subcategory values('','$cid',' $subcname','$subcdes')";
+
+        mysqli_query($con,$query);
+        header("location");
+    }
+
+
+?>
+
+
+
+
+User:-
+---------------------------------------AddtoCart.php---------------------------------------------
+
+<?php
+    include("../user/connection.php");
+    require("../user/header.php");
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <form method="POST" action="" enctype="multipart/form-data">
+            <h1 class="mb-5">My Cart</h1>
+            <div class="row row-cols-1 row-cols-md-3 g-4">
+                <?php
+                    foreach($_SESSION['cart'] as $item){
+                        $sell_prod = mysqli_query($con,"SELECT * from `product` where productid=$item") or die(mysqli_errno($con));
+                        $row = mysqli_fetch_assoc($sell_prod);
+                    
+                    ?>
+                    <div class="col">
+                        <div class="card mb-3" style="max-width: 540px;">
+                        <div class="row g-0">
+                            <div class="col-md-6">
+                              <img src="../admin/photo/<?php echo $row['photo']; ?>" height="200px" width="200px" />
+                              </div>
+                                <div class="col-md-6">
+                                    <div class="card-body">
+                                        <input type="hidden" name="hid<?php echo $row['productid'] ?>" value="<?php echo $row['productid'] ?>">
+                                        <h5 class="card-title"><?php echo $row['proname']; ?></h5>
+                                        <p class="card-text"><?php echo $row['prodes'];?></p>
+                                        <p class="card-text"><small class="text-muted"><?php echo $row['proprice']; ?></small></p>
+                                        <p class="card-text"><input type="number" min=0 value="1" max="<?php echo $row['prostock']?> name="qty<?php echo $row['productid'] ?>" class="w-50 form-control"></p>
+                                            <div class="">
+                                                <button type="submit" class="btn btn-success w-100 mb-3" name="buy<?php echo $row['productid'] ?>">Buy</button>
+                                                <button type="submit" class="btn btn-success w-100 mb-3" name="remove<?php echo $row['productid'] ?>">Remove</button>    
+                                            </div>
+                                    </div>
+                                </div>
+                            
+                        </div>
+                    </div>
+                    </div>
+        <?php
+        if(isset($_POST['remove'.$row['productid']])){
+            $pid = $_POST['hid'.$row['productid']];
+            unset($_SESSION['cart'][$pid]);
+            ?>
+            <script>
+                window.location='addtocart.php';
+            </script>
+            <?php
+        }
+        if(isset($_POST['buy'.$row['productid']])){
+            $pid = $_POST['hid'.$row['productid']];
+            $qty = $_POST['qty'.$row['productid']];
+            $res = mysqli_query($con,"insert into 'report'('rid','productid','price','qty','date') values ('$uid','$pid','')") or die(mysqli_errno($con));
+            ?>
+             <script>
+                window.location='addtocart.php';
+            </script>
+            <?php
+
+        }
+
+    }
+
+        ?>
+            </div>
+        </form>
+    </div>
+</body>
+
+</html>
+
+
+-------------------------------------------Admin1.php-----------------------------------------------
+
+
+<?php
+require("../user/connection.php");
+// require("../admin/navbar.php");
+session_start();
+if (isset($_POST['s'])) {
+    $_SESSION['cart'][$_POST['h']] = $_POST['h'];
+    header("location:addtocart.php");
+}
+
+
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<script>
+    function search() {
+        var val = document.getElementById("sch").value;
+        var data = new XMLHttpRequest();
+        data.onreadystatechange = function() {
+            if (this.readystate == 4 && this.status == 200) {
+                document.getElementById("showdata").innerHTML = this.responseText;
+            }
+        };
+        data.open("GET", "getdata.php?pid=" + val, true);
+        data.send();
+
+    }
+</script>
+
+<body>
+    <div class="container d-flex justify-content-center mt-5">
+        <input type="text" id="sch" onkeyup="search()" class="form-control w-50" placeholder="Enter Here!">
+    </div>
+    <form method="POST" enctype="multipart/form-data" action="">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row text-center bg-warning">
+                        <h1>Shopping Cart</h1>
+                    </div>
+                    <table class="table table-dark">
+                        <thead>
+                            <th>Name</th>
+                            <th>Description</th>
+                            <th>Price</th>
+                            <th>Image</th>
+                            <th>Add to Cart</th>
+                        </thead>
+                        <tbody id="showdata">
+                            <?php
+                            $query = "select * from product";
+                            $res = mysqli_query($con, $query);
+                            while ($row = mysqli_fetch_assoc($res)) {
+
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['proname']; ?></td>
+                                    <td><?php echo $row['prodes']; ?></td>
+                                    <td><?php echo $row['proprice']; ?></td>
+                                    <td><img src="../admin/photo/<?php echo $row['photo']; ?>" height="60" width="50"></td>
+                                    <td>
+                                        <form method="POST" action="">
+                                            <input type="hidden" name="h" value="<?php echo $row['productid']; ?>">
+                                            <input type="submit" value="Add" name="s">
+                                        </form>
+                                    </td>
+
+                                </tr>
+                            <?php
+                            }
+
+
+                            ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+</body>
+
+</html>
+
+
+
+--------------------------------------Connection.php--------------------------------------------
+
+<?php
+$con = mysqli_connect("localhost","root","","shopping") or die('Connection Failed');
+
+?>
+
+
+------------------------------------------GetData.php----------------------------------------------
+
+<?php
+$con = mysqli_connect("localhost", "root", "", "shopping") or die('Connection Failed');
+if (isset($_GET['pid'])) {
+    $val = $_GET['pid'];
+    $query = "SELECT * from `product` where `proname` like '%$val%'";
+    $res = mysqli_query($con, $query) or die(mysqli_error($con));
+
+
+    while ($row = mysqli_fetch_assoc($res)) {
+
+?>
+        <tr>
+            <td><?php echo $row['proname']; ?></td>
+            <td><?php echo $row['prodes']; ?></td>
+            <td><?php echo $row['proprice']; ?></td>
+            <td><img src="../admin/photo/<?php echo $row['photo']; ?>" height="60" width="50"></td>
+            <td>
+                <form method="POST" action="">
+                    <input type="hidden" name="h" value="<?php echo $row['productid']; ?>">
+                    <input type="submit" value="Add" name="s">
+                </form>
+            </td>
+
+        </tr>
+<?php
+    }
+}
+?>
+
+
+----------------------------------------------Header.php-------------------------------------------
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<?php
+session_start();
+if(!isset($_SESSION['user'])){
+    header('location:login.php');
+}
+$uid = $_SESSION['user'];
+if(isset($_SESSION['cart']))
+{
+    $cnt = count($_SESSION['cart']);
+}
+else
+{
+    $cnt=0;
+}
+
+?>
+<body>
+    <nav class="navbar navbar-expand-lg bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="../user/header.php">User</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="">
+                    <span class="navbar-toggle-icon"></span>
+                    </button>
+                        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            </ul>
+                            <div class="d-flex" role="search">
+                                <a class="navbar-brand" href="../user/admin1.php">View Product</a>
+                                <a class="btn btn-outline-success" href="../user/addtocart.php">Cart(<?php echo $cnt;?>)</a>
+                            </div>
+                        </div>
+           
+        </div>
+</nav>
+</body>
+</html>
+
+
+--------------------------------------------Manage.php-------------------------------------------
+
+<?php
+echo $_GET["id"];
+?>
+
+--------------------------------------------Login.php--------------------------------------------
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- JavaScript Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <!-- CSS only -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    
+</head>
+<?php
+    require("connection.php");
+    session_start();
+    if(isset($_POST['login']))
+    {
+        $username = $_POST['username'];
+        $password = $_POST['password'];
+
+        $query = "SELECT * from registration where `name`='$username' and `password`='$password'";
+        $res = mysqli_query($con,$query) or die(mysqli_error($con));
+        $row = mysqli_fetch_assoc($res);
+        
+            if($row['status']=='admin')
+            {
+                header("location:../admin/navbar.php");
+            }
+            
+            elseif($row['status']=='user')
+            {
+                $_SESSION['user'] = $row['rid'];
+                header("location:../user/header.php");
+            }
+        }
+    
+
+
+
+?>
+<body>
+    <h1><i><center>Login Form</center></i></h1><br>
+    <form method="POST" action="">
+        <div class="container">
+            <div align="center">
+            <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Username</label>
+                <input type="text" class="form-control" name="username" placeholder="Enter Username" style="width:min-content;" >
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter Password" style="width: max-content;">
+              </div>
+              <div>
+                <input type="submit" class="btn btn-primary" value="Login" name="login" style="width: max-content;">
+              </div>
+              <div class="col-6">
+                Create an account<a href="../user/registration.php">Register</a>
+              </div>
+            </div>
+        </div>
+    </form>
+</body>
+</html>
+
+
+---------------------------------------Logout.php-------------------------------------------------
+
+<?php
+session_start();
+session_destroy();
+header("Location:login.php");
+
+
+?>
+
+
+-------------------------------------------Registration.php---------------------------------------
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+     <!-- JavaScript Bundle with Popper -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+     <!-- CSS only -->
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1><i><center>Registration Form</center></i></h1><br>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <div class="container">
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Name</label>
+                <input type="text" class="form-control" name="name" placeholder="Enter Name">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Password</label>
+                <input type="password" class="form-control" name="password" placeholder="Enter Password">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Contact Number</label>
+                <input type="text" class="form-control" name="number" placeholder="Enter Contact Number">
+              </div><br>
+              <div class="mb-3">
+                <label for="exampleFormControlInput1" class="form-label">Photo</label>
+                <input type="file" class="form-control" name="photo" >
+              </div><br>
+              <div align="center">
+                <input type="submit" class="btn btn-primary" value="Register" name="submit" style="width: max-content;">
+              </div>
+              <div class="col-6">
+                Already Register <a href="../user/login.php">Log in</a>
+              </div>
+        </div>
+    </form>
+</body>
+</html>
+
+
+<?php 
+require("connection.php");
+
+if(isset($_POST['submit']))
+{
+    $name = $_POST['name'];
+    $password = $_POST['password'];
+    $contact = $_POST['number'];
+
+
+    $filename = $_FILES['photo']['name'];
+    $basename = substr($filename,0,strripos($filename,'.'));
+    $ext = substr($filename,strripos($filename,'.'));
+    $tmp = $_FILES['photo']['tmp_name'];
+
+    $allowed_array = array(".jpg",".png",".jpeg");
+    $uploadok=0;
+
+    if(in_array($ext,$allowed_array))
+    {
+        $newfilename = md5($basename).rand(1,700).$ext;
+        if(file_exists("../php2/upload/".$newfilename))
+        {
+            echo "<script> alert('File Already Exists')</script>";
+
+        }
+        else
+        {
+            move_uploaded_file($tmp,"../php2/upload/".$newfilename);
+            $uploadok = 1;
+        }
+    }
+    elseif(empty($basename))
+    {
+        echo "<script> alert('Please select file to upload')</script>";
+    }
+    elseif($size > 2000000)
+    {
+        echo "<script> alert('File is too large to upload')</script>";
+    }
+    else
+    {
+        echo "<script> alert('File extension should be".implode(',',$allowed_array)."')</script>";
+    }
+    if($uploadok==1)
+    {
+        echo "<script> alert('File Uploaded Successfully')</script>";
+    }
+    $query = "insert into registration values('','$name','$password','$contact','$newfilename','user')";
+
+    mysqli_query($con,$query);
+    header("location:../user/login.php");
+
+}
+
+
+?>
+
+
